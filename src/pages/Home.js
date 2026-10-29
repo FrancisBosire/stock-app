@@ -9,8 +9,7 @@ const Home = () => {
     <div>
       <Search searchStringUpdated={setSearchString} />
       
-      {/* Title under the search box */}
-      <h3 className="section-title">Trending Indexes</h3>
+      <h3 className="section-title">Trending Stocks</h3>
 
       <Cards searchString={searchString} />
     </div>

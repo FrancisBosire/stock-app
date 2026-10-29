@@ -1,40 +1,45 @@
-// src/components/Cards.js
-
 import React, { useEffect, useState } from 'react';
 import SingleCard from './SingleCard';
-import '../App.css';
+import { fetchYahoo } from '../utils/yahooApi';
 
 const Cards = ({ searchString }) => {
   const [symbols, setSymbols] = useState([]);
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchTrendingSymbols = async () => {
       try {
-        const response = await fetch('https://yfapi.net/v1/finance/trending/US', {
-          method: 'GET',
-          headers: {
-            'x-api-key': apiKey
-          }
-        });
-        const result = await response.json();
-        const trendingSymbols = result.finance.result[0].quotes.map(q => q.symbol);
-        setSymbols(trendingSymbols.slice(0, 10)); // limit to 10
+        const result = await fetchYahoo('/v1/finance/trending/US', controller.signal);
+        const trendingSymbols = result?.finance?.result?.[0]?.quotes
+          ?.map(quote => quote.symbol)
+          .filter(Boolean) || [];
+        setSymbols(trendingSymbols.slice(0, 10));
+        if (trendingSymbols.length === 0) setError('No trending stocks were returned.');
       } catch (error) {
-        console.error('Error fetching trending symbols:', error);
+        if (error.name !== 'AbortError') setError(error.message || 'Unable to load trending stocks.');
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     fetchTrendingSymbols();
-  }, [apiKey]);
+    return () => controller.abort();
+  }, []);
+
+  const filteredSymbols = symbols.filter(symbol =>
+    symbol.toLowerCase().includes(searchString.toLowerCase())
+  );
 
   return (
     <div className="cards-list">
-      {symbols
-        .filter(symbol => symbol.toLowerCase().includes(searchString.toLowerCase()))
-        .map((symbol, index) => (
-          <SingleCard key={index} symbol={symbol} />
-        ))}
+      {loading && <p role="status">Loading trending stocks…</p>}
+      {!loading && error && <p role="alert">{error}</p>}
+      {!loading && !error && filteredSymbols.length === 0 && <p>No stocks match your search.</p>}
+      {!loading && !error && filteredSymbols.map(symbol => (
+        <SingleCard key={symbol} symbol={symbol} />
+      ))}
     </div>
   );
 };
