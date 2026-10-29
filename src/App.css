@@ -1,1 +1,187 @@
-/*  Write your styles here  */
+/* ===== Global Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Oxygen', sans-serif;
+  background-color: #fafafa;
+  line-height: 1.6;
+}
+
+/* ===== Header Styles ===== */
+.header {
+  background-color: #191970;
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header-title {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1rem;
+}
+.section-title {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #191970;
+}
+
+
+/* ===== Slider Styles ===== */
+.slider {
+  background-color: #f5f5f5;
+  line-height: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0.9rem 1rem;
+  font-size: medium;
+  border-bottom: 1px solid #ddd;
+}
+
+.slider div {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 25s linear infinite;
+}
+
+.slider div span {
+  padding-left: 15px;
+}
+
+.slider-market-raw {
+  margin-right: 20px;
+  color: black;
+  font-weight: 500;
+}
+
+.slider-name {
+  color: #191970;
+  font-weight: bold;
+}
+
+@keyframes marquee {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+/* ===== Search Styles ===== */
+.search-container {
+  margin: 2rem auto 1rem auto;
+  max-width: 400px;
+  padding: 0 1rem;
+}
+
+/* ===== Cards List Layout ===== */
+.cards-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+}
+
+/* ===== Individual Card Styles ===== */
+.card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  margin: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s, color 0.3s;
+
+  text-align: center;
+  width: 220px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #333; /* default text color */
+}
+
+
+.card:hover {
+  transform: scale(1.03);
+  background-color: #e6f0ff; /* Brighter light blue */
+  color: #191970;            /* Keep text dark blue */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* ===== Button Styling ===== */
+.card-button {
+  background-color: #191970;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  font-size: 0.95rem;
+}
+
+.card-button:hover {
+  background-color: #00008b;
+  color: #e0e0e0;
+}
+
+/* ===== Stocks Details Page ===== */
+
+/* ===== Stocks Details Page ===== */
+
+.stocks-page {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stock-title {
+  font-size: 1.6rem;
+  color: #191970;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.stock-details {
+  text-align: left;
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 2rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+  line-height: 1.6;
+}
+
+.stock-details p {
+  font-size: 1.05rem;
+  margin: 0.5rem 0;
+}
+
+.chart-container {
+  width: 90%;
+  max-width: 800px;
+}
