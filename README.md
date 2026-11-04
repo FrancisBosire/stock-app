@@ -1,44 +1,44 @@
 # Stock Market App
 
-A small React app for browsing trending US stocks. Search the current trending list, open a stock to see its exchange and quote details, and view its closing prices over the last month.
-
-Market data comes from the Yahoo Finance API through [yfapi.net](https://yfapi.net/). An API key is required for the market summary, trending stocks, and stock details.
+A React app for browsing trending US stocks and the Nairobi Securities Exchange (NSE). Search US companies or ticker symbols, view quote details and charts, and explore delayed NSE prices, market status, and company details.
 
 ## Requirements
 
 - Node.js and npm
-- An API key for yfapi.net with access to the endpoints used by this app
+- A yfapi.net key for US market data
+- A Mansa Markets key for NSE data
 
 ## Run locally
 
-1. Install the dependencies:
+1. Install dependencies:
 
    ```sh
    npm install
    ```
 
-2. Copy `.env.example` to `.env` and replace the example value with your API key:
+2. Copy `.env.example` to `.env` and add your keys:
 
    ```text
-   REACT_APP_API_KEY=your_api_key
+   YAHOO_API_KEY=your_yahoo_finance_api_key
+   MANSA_API_KEY=your_mansa_api_key
    ```
 
-   Keep `.env` private. Restart the development server after changing it.
+   Do not use quotes. Keep `.env` private and restart the app after changing it. If your current file uses `REACT_APP_API_KEY`, rename that variable to `YAHOO_API_KEY`.
 
-3. Start the app:
+3. Start the development server:
 
    ```sh
    npm start
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser. The development server usually opens it automatically. Press `Ctrl+C` in the terminal to stop it.
+4. Open [http://localhost:3000](http://localhost:3000).
 
-Select **View Details** on a stock to open its detail page. The selected symbol is part of the URL, so refreshing that page keeps the selected stock.
+When the US search is empty, the app shows trending stocks. Enter at least two characters to search by company or ticker. NSE stock history is loaded only when requested and may require a higher Mansa plan.
+
+## API keys and deployment
+
+The local Create React App proxy in `src/setupProxy.js` sends Yahoo and Mansa requests from the development server, keeping keys out of browser code. This proxy is for local development only. Before deploying, provide a server-side or serverless proxy for `/api/yahoo` and `/api/mansa`, and store keys as private server environment variables. Never put API keys in `REACT_APP_*` variables or commit `.env`.
 
 ## Production build
 
-Run `npm run build` to create a production build in `build/`.
-
-## API key note
-
-This app calls yfapi.net directly from the browser. Create React App includes `REACT_APP_*` values in the client bundle, so the API key can be seen by visitors to a deployed site. Use a server-side API proxy and server-only environment variable before deploying with a private or quota-limited key. Do not commit `.env` or publish a real key.
+Run `npm run build` to create the production files in `build/`.

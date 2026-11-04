@@ -1,24 +1,11 @@
-// src/components/SingleCard.js
-
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../App.css';
 
-const SingleCard = ({ symbol }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/stocks`, { state: symbol });
-  };
-
-  return (
-    <div className="card">
-      <h3 className="card-title">{symbol}</h3>
-      <button className="card-button" onClick={handleClick}>
-        View Details
-      </button>
-    </div>
-  );
-};
-
+const SingleCard = ({ symbol, name, exchange }) => <article className="card">
+  <h3 className="card-title">{symbol}</h3>
+  {name && <p className="stock-card-name">{name}</p>}
+  {exchange && <p className="stock-card-exchange">{exchange}</p>}
+  <Link className="card-button" to={'/stocks/' + encodeURIComponent(symbol)}>View Details</Link>
+</article>;
 export default SingleCard;
